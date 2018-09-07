@@ -243,7 +243,7 @@ SaberStatus JitAvx2Conv<AK_FLOAT>::dispatch(
                     par_conv.filt = ptr_weights + ocb * jcp.kh * jcp.kw * jcp.ic * 8 + wgt_ic * 8 + wh * jcp.kw * jcp.ic * 8;
 
                     if (icb == 0) {
-                        if (bias) {
+                        if (ptr_bias) {
                             par_conv.bias = ptr_bias +  _oc * 8;
                         }
                         par_conv.flags |= 1 << 4;
