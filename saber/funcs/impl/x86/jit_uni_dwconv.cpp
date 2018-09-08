@@ -204,10 +204,10 @@ SaberStatus JitUniDWConv<AK_FLOAT>::dispatch(
 
         const int i_l_overflow = utils::max(0, (jcp.l_pad - ow * str_w));
         const int i_r_overflow = utils::max(jcp.iw, (ow * str_w
-                                                     + (jcp.kw - 1)*dil_w - jcp.l_pad + 1)) - jcp.iw;
+                                                     + (jcp.kw - 1) * dil_w - jcp.l_pad + 1)) - jcp.iw;
 
-        const int iw = utils::max((ow*str_w - jcp.l_pad
-                                   + utils::div_up(i_l_overflow, dil_w)*dil_w), 0);
+        const int iw = utils::max((ow * str_w - jcp.l_pad
+                                   + utils::div_up(i_l_overflow, dil_w) * dil_w), 0);
         const int kw = utils::div_up(i_l_overflow, dil_w);
 
         const int kw_padding = jcp.kw - utils::div_up(i_l_overflow, dil_w)
@@ -218,7 +218,7 @@ SaberStatus JitUniDWConv<AK_FLOAT>::dispatch(
 
         //par_conv.filt = &weights[weights_d.blk_off(ch, 0, 0, kh, kw)];
         par_conv.filt = ptr_weights + (ch * jcp.kh * jcp.kw + kh * jcp.kw + kw) *16;
-        if (bias) {
+        if (ptr_bias) {
             par_conv.bias = ptr_bias + ch * jcp.ch_block;
         }
 
